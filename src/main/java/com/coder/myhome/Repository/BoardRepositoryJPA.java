@@ -51,4 +51,24 @@ public class BoardRepositoryJPA {
                 getResultList();
         return result;
     }
+
+    public List<Board> findByTitle(String title){
+
+        List<Board> result = em.createQuery("select m from Board m where m.title = :title", Board.class)
+                .setParameter("title",title)
+                .getResultList();
+
+        return result;
+    }
+
+    public List<Board> findByTitleOrContent(String title, String content){
+
+        List<Board> result = em.createQuery("select m from Board m where m.title = :title or m.content = :content"
+                , Board.class)
+                .setParameter("title",title)
+                .setParameter("content",content)
+                .getResultList();
+//Page를 이용하면 전체가 아닌 걸 할 수 있다.
+        return result;
+    }
 }
